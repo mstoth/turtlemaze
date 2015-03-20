@@ -112,6 +112,22 @@ def canGoBack(t):
 def travelMaze(t):
   global d
   while not solved(t):
+    goToBranch(t)
+    if canGoLeft(t):
+      savex=t.getXPos()
+      savey=t.getYPos()
+      saveh=t.getHeading()
+      turnLeft(t)
+      if travelMaze(t):
+        return true
+      else:
+        t.setXPos(savex)
+        t.setYPos(savey)
+        t.setHeading(saveh)
+        return travelMaze(t)
+    else:
+      
+        
     goToWall(t)
     if canGoLeft(t):
       turnLeft(t)
@@ -132,10 +148,17 @@ def travelMaze(t):
 # w.repaint()
     
 def goToWall(t):
+  counter = 0
   while canGoForward(t):
     forward(t,1)
     time.sleep(0.01)
     if canGoRight(t):
+      while canGoRight(t):
+        forward(t,1)
+        counter += 1
+      backward(t,counter/2)
+      turnRight(t)
+      
       if random.randint(0,1): # randomly choose to take the right turn
         forward(t,5)
         turnRight(t)

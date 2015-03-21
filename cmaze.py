@@ -56,16 +56,16 @@ class Maze:
         px = getPixelAt(self.image,xpos-d,ypos)
       return d
       
-  def colorInFront(self):
+  def colorInFront(self,d=10):
     h=self.t.getHeading()
     if h == 0:
-      return getColor(getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()-10))
+      return getColor(getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()-d))
     if h == 90 or h == -270:
-      return getColor(getPixelAt(self.image,self.t.getXPos()+10,self.t.getYPos()))
+      return getColor(getPixelAt(self.image,self.t.getXPos()+d,self.t.getYPos()))
     if h == 180 or h == -180:
-      return getColor(getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()+10))
+      return getColor(getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()+d))
     if h == 270 or h == -90:
-      return getColor(getPixelAt(self.image,self.t.getXPos()-10,self.t.getYPos()))
+      return getColor(getPixelAt(self.image,self.t.getXPos()-d,self.t.getYPos()))
   
   def turnTurtleRight(self):
     self.t.setHeading(self.t.getHeading()+90)
@@ -73,7 +73,31 @@ class Maze:
   def turnTurtleLeft(self):
     self.t.setHeading(self.t.getHeading()-90)
     
+  def surroundings(self):
+    sur=[]
+    # get color where I am
+    c=getColor(getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()))
+    sur.append(c)
+    for i in range(4):
+      sur.append(self.colorInFront(15))
+      self.t.turnRight()
+    bounds=[]
+    for c in sur:
+      if distance(c,yellow)<50:
+        bounds.append('end')
+      elif distance(c,green)<50:
+        bounds.append('visited')
+      elif distance(c,red)<50:
+        bounds.append('visited')
+      elif distance(c,blue)<100:
+        bounds.append('wall')
+      elif distance(c,white)<50:
+        bounds.append('empty')
+      else: # assume a wall
+        bounds.append('wall')
+    return bounds
   
+      
       
   def move2wall(self):
     d=self.distance2wall()
@@ -94,24 +118,29 @@ class Maze:
       else:
         addLine(self.image,self.t.getXPos(),self.t.getYPos()-5,self.t.getXPos(),self.t.getYPos()+5,color)
       forward(self.t,1) 
-      
+  
+  def solve(self,xpos,ypos):
+    s=self.surroundings()
+    if s[0] == 'end':
+      print 'found at %d, %d' % (xpos,ypos)
+  def showGrid(self):
+    dx=self.image.getWidth()/20
+    dy=dx
+    for xpos in range(20):
+      addLine(self.image,xpos*dx,0,xpos*dx,self.image.getHeight(),black)
+    ypos = 0
+    while ypos < getHeight(self.image):
+      addLine(self.image,0,ypos,self.image.getWidth(),ypos,black)  
+      ypos += dx
+    self.w.repaint()
+  
+  
+  
+  
+  
 m=Maze('maze.jpg')
 
 m.move2wall()
-m.turnTurtleRight()
-m.move2wall()
-m.turnTurtleRight()
-m.move2wall()
-m.turnTurtleLeft()
-m.move2wall()
-m.turnTurtleLeft()
-m.move2wall()
-m.turnTurtleLeft()
-m.turnTurtleLeft()
-m.move2wall()
-m.turnTurtleRight()
-m.move2wall()
-m.turnTurtleRight()
-m.move2wall()
 
+  
 

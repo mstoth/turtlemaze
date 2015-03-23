@@ -799,3 +799,10 @@
 <menu_button time="Sun Mar 22 15:08:15 EDT 2015">Save Program</menu_button>
 <file_saved time="Sun Mar 22 15:08:15 EDT 2015">C:\Users\mst\Downloads\maze106\cmaze.py</file_saved>
 </file_created>
+<menu_button time="Sun Mar 22 15:08:22 EDT 2015">Load Program</menu_button>
+<command_run time="Sun Mar 22 15:08:24 EDT 2015">m.solve(t.getXPos(),t.getYPos(),t.getHeading())></command_run>
+<menu_button time="Sun Mar 22 15:11:57 EDT 2015">Load Program</menu_button>
+<command_run time="Sun Mar 22 19:51:19 EDT 2015">w=makeWorld(200,200)></command_run>
+<menu_button time="Sun Mar 22 20:19:25 EDT 2015">Save Program</menu_button>
+<file_saved time="Sun Mar 22 20:19:25 EDT 2015">C:\Users\mst\Downloads\maze106\cmaze.py</file_saved>
+</file_created>

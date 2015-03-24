@@ -69,3 +69,71 @@
 <menu_button time="Sun Mar 22 21:22:26 EDT 2015">Save Program</menu_button>
 <file_saved time="Sun Mar 22 21:22:26 EDT 2015">C:\Users\mst\Downloads\maze106\bounce.py</file_saved>
 </file_created>
+<menu_button time="Sun Mar 22 21:22:30 EDT 2015">Load Program</menu_button>
+<command_run time="Sun Mar 22 21:22:36 EDT 2015">rev(a)></command_run>
+<command_run time="Mon Mar 23 06:18:07 EDT 2015">import system></command_run>
+<command_run time="Mon Mar 23 06:18:09 EDT 2015">import sys></command_run>
+<command_run time="Mon Mar 23 06:18:15 EDT 2015">sys.stdout write 'hi'></command_run>
+<command_run time="Mon Mar 23 06:18:22 EDT 2015">sys.stdout></command_run>
+<command_run time="Mon Mar 23 06:18:45 EDT 2015">sys.stdout.write 'hi'></command_run>
+<command_run time="Mon Mar 23 06:18:53 EDT 2015">sys.stdout.write('hi')></command_run>
+<command_run time="Mon Mar 23 06:19:42 EDT 2015">w=makeWorld(400,400)></command_run>
+<command_run time="Mon Mar 23 06:19:54 EDT 2015">t=makeTurtle(w)></command_run>
+<command_run time="Mon Mar 23 06:20:20 EDT 2015">forward(t) for i in range(4)></command_run>
+<command_run time="Mon Mar 23 06:20:30 EDT 2015">[forward(t) for i in range(4)]></command_run>
+<command_run time="Mon Mar 23 06:21:25 EDT 2015">def forwardAndRight(t):
+  forward(t)
+  turn(t)></command_run>
+<menu_button time="Mon Mar 23 06:21:42 EDT 2015">Load Program</menu_button>
+<command_run time="Mon Mar 23 06:21:58 EDT 2015">w=makeWorld(400,400)></command_run>
+<command_run time="Mon Mar 23 06:22:08 EDT 2015">t=makeTurtle(w)></command_run>
+<command_run time="Mon Mar 23 06:22:23 EDT 2015">[forwardAndRight(t) for i in range(4)]></command_run>
+<command_run time="Mon Mar 23 06:23:04 EDT 2015">a=[forwardAndRight(t) for i in range(4)]></command_run>
+<command_run time="Mon Mar 23 06:23:39 EDT 2015">a;turn5></command_run>
+<command_run time="Mon Mar 23 06:23:50 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:23:54 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:23:58 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:06 EDT 2015">></command_run>
+<command_run time="Mon Mar 23 06:24:09 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:10 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:11 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:12 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:12 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:14 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:15 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:16 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:17 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:18 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:18 EDT 2015">a;turn(t,5)></command_run>
+<command_run time="Mon Mar 23 06:24:35 EDT 2015"> a></command_run>
+<command_run time="Mon Mar 23 06:24:37 EDT 2015">a></command_run>
+<command_run time="Mon Mar 23 06:24:45 EDT 2015">a._str_></command_run>
+<command_run time="Mon Mar 23 06:24:49 EDT 2015">print a></command_run>
+<command_run time="Mon Mar 23 06:25:26 EDT 2015">def boxAndTurn(t)></command_run>
+<command_run time="Mon Mar 23 06:25:29 EDT 2015">></command_run>
+<command_run time="Mon Mar 23 06:26:17 EDT 2015">def boxAndTurn(t):
+  forwardAndTurn(t)
+  turnRight(t,5)></command_run>
+<command_run time="Mon Mar 23 06:26:52 EDT 2015">w=makeWorld(400,400)></command_run>
+<command_run time="Mon Mar 23 06:27:00 EDT 2015">t=makeTurtle(w)></command_run>
+<command_run time="Mon Mar 23 06:27:58 EDT 2015">[boxAndTurn(t) for i in range(72)]></command_run>
+<menu_button time="Mon Mar 23 06:31:31 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 23 06:31:31 EDT 2015">C:\Users\mst\Downloads\maze106\bounce.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 23 06:31:32 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 23 06:31:44 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 23 06:31:44 EDT 2015">C:\Users\mst\Downloads\maze106\bounce.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 23 06:31:45 EDT 2015">Load Program</menu_button>
+<command_run time="Mon Mar 23 06:31:51 EDT 2015">box></command_run>
+<command_run time="Mon Mar 23 06:31:55 EDT 2015">box(t)></command_run>
+<command_run time="Mon Mar 23 06:32:02 EDT 2015">design(t)></command_run>
+<command_run time="Mon Mar 23 06:32:17 EDT 2015">360/5></command_run>
+<menu_button time="Mon Mar 23 06:32:48 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 23 06:32:48 EDT 2015">C:\Users\mst\Downloads\maze106\bounce.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 23 06:32:51 EDT 2015">Load Program</menu_button>
+<command_run time="Mon Mar 23 06:32:56 EDT 2015">design(t)></command_run>
+<menu_button time="Mon Mar 23 06:33:30 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 23 06:33:30 EDT 2015">C:\Users\mst\Downloads\maze106\bounce.py</file_saved>
+</file_created>

@@ -1,6 +1,7 @@
 import random
 import time
-w=makeWorld(200,200)
+
+w=makeWorld(400,400)
 t=makeTurtle(w)
 while 0:
   while t.getXPos() > 5 and t.getXPos() < 195 and t.getYPos() > 5 and t.getYPos() < 195:
@@ -10,8 +11,23 @@ while 0:
   turn(t,random.randint(-5,5))
   forward(t,2)
   
-  
+
 def rev(s):
   if (len(s)>1):
     rev(s[1:len(s)]);
-  print(s[0]);
+  print(s[0])
+
+def forwardAndTurn(t):
+  forward(t)
+  turn(t)
+  
+def box(t):
+  [forwardAndTurn(t) for i in range(4)]
+  
+def boxAndTurn(t):
+  box(t)
+  turn(t,20)
+
+def design(t):
+  [boxAndTurn(t) for i in range(19)]
+  

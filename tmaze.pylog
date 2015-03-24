@@ -355,4 +355,25 @@
 <command_run time="Mon Mar 23 18:42:42 EDT 2015">distance(getColor(px),white)></command_run>
 <menu_button time="Mon Mar 23 18:43:33 EDT 2015">Save Program</menu_button>
 <file_saved time="Mon Mar 23 18:43:33 EDT 2015">/Users/michaeltoth/Documents/turtlemaze/tmaze.py</file_saved>
+<file_opened time="Mon Mar 23 22:44:31 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_opened>
+<menu_button time="Mon Mar 23 22:45:25 EDT 2015">Load Program</menu_button>
+<file_saved time="Mon Mar 23 22:45:27 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<command_run time="Mon Mar 23 22:45:50 EDT 2015">explore(m.image)></command_run>
+<menu_button time="Mon Mar 23 22:47:55 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 23 22:47:55 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 23 22:47:59 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 23 22:56:57 EDT 2015">Load Program</menu_button>
+<file_saved time="Mon Mar 23 22:56:59 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 23 22:57:50 EDT 2015">Load Program</menu_button>
+<file_saved time="Mon Mar 23 22:57:51 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<command_run time="Mon Mar 23 22:58:12 EDT 2015">m.t.getXPos()></command_run>
+<menu_button time="Tue Mar 24 06:20:59 EDT 2015">Load Program</menu_button>
+<file_saved time="Tue Mar 24 06:21:00 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 24 06:25:31 EDT 2015">Load Program</menu_button>
+<file_saved time="Tue Mar 24 06:25:33 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
 </file_created>

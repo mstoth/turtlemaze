@@ -9,7 +9,7 @@ class Maze(object):
     self.w.setPicture(self.image)
     self.t = makeTurtle(self.w)
     penUp(self.t)
-    moveTo(self.t,25,184)
+    moveTo(self.t,25,187)
     self.t.setHeading(90)
     penDown(self.t)
     
@@ -34,6 +34,7 @@ class Maze(object):
   def travel2BranchOrWall(self):
     while self.colorInFront() != blue:
       forward(self.t,1)
+    forward(self.t,8)
         
                 
 # tests
@@ -56,7 +57,7 @@ m.t
 
 # test that it is in the right place
 assert m.t.getXPos() == 25, 'Turtle x position not correct.'
-assert m.t.getYPos() == 184, 'Turtle y position not correct.'
+assert m.t.getYPos() == 187, 'Turtle y position not correct.'
 
 # tests for the existence of colorInFront
 c=m.colorInFront()
@@ -78,7 +79,7 @@ turn(m.t,180)
 assert m.colorInFront() == blue, 'color is not blue facing south'
 
 # test that we get blue for facing west
-moveTo(m.t,25,184)
+moveTo(m.t,25,187)
 m.t.setHeading(-90)
 assert m.colorInFront() == blue, 'color is not blue facing west'
 
@@ -87,15 +88,21 @@ m.t.setHeading(180)
 assert m.colorInFront() == blue, 'color is not blue facing south'
 
 # test for the existence of travel2BranchOrWall
-moveTo(m.t,25,184)
+moveTo(m.t,25,187)
 m.t.setHeading(90)
 m.travel2BranchOrWall()
 
+# test that we are at the wall
+assert m.t.getXPos() == 100, 'X position not correct for travel2BranchOrWall'
+assert m.t.getYPos() == 187, 'Y position not correct for travel2BranchOrWall'
+
+
+
 # test that we stop at a branch
-moveTo(m.t,25,184) 
-m.t.setHeading(0)
-m.travel2BranchOrWall()
-assert m.t.getYPos() == 105, "turtle didn't stop at branch."
+# moveTo(m.t,25,187) 
+# m.t.setHeading(0)
+# m.travel2BranchOrWall()
+# assert m.t.getYPos() == 105, "turtle didn't stop at branch."
 
 
 #if c != white:

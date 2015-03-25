@@ -20,13 +20,15 @@ class Maze(object):
       return white
     if distance(c,blue) < 150:
       return blue
+    if distance(c,red) < 150:
+      return red
     if distance(c,green) < 150:
       return green
     if distance(c,yellow) < 150:
-      return blue
+      return yellow
       
   def colorInFront(self):
-    """ returns the color 5 pixels in front of the turtle"""
+    """ returns the color 15 pixels in front of the turtle"""
     heading = self.t.getHeading()
     if heading == 90 or heading == -270: 
       px = getPixelAt(self.image,self.t.getXPos()+15,self.t.getYPos()) 
@@ -41,17 +43,19 @@ class Maze(object):
       return white
     if distance(c,blue) < 150:
       return blue
+    if distance(c,red) < 150:
+      return red
     if distance(c,green) < 150:
       return green
     if distance(c,yellow) < 150:
-      return blue
+      return yellow
     # Unknown color, assume wall. 
     return blue
     
   def travel2BranchOrWall(self):
     while self.surroundings()[1] == 'empty' or self.surroundings()[3] == 'empty':
       self.travelForward(1)
-    while self.surroundings()[0] != 'wall':
+    while self.surroundings()[0] != 'wall' and self.surroundings()[0] != 'end':
       self.travelForward(1)
       if self.surroundings().count('empty') > 1:
         self.travelForward(9)
@@ -59,7 +63,8 @@ class Maze(object):
     self.travelForward(9)
         
   def surroundings(self):
-    colorMap = { 'wall':blue,'empty':white,'visited':green,'end':yellow}
+    """ returns a list of 4 states representing the turtle's environment """
+    colorMap = { 'wall':blue,'empty':white,'visited':green,'end':yellow, 'visited':red}
     s=[]
     for i in range(4):
       c = self.colorInFront()
@@ -73,11 +78,33 @@ class Maze(object):
     while dist > 0:
       x=self.t.getXPos()
       y=self.t.getYPos()
-      addOvalFilled(self.image,x-5,y-5,10,10,green)
+      if self.currentColor() == white:
+        addOvalFilled(self.image,x-10,y-10,20,20,green)
+      else:
+        addOvalFilled(self.image,x-10,y-10,20,20,red)
       dist=dist-1
       forward(self.t,1)
+      repaint(m.image)
     
-      
+  def solve(self):
+    """ solves the maze """
+    if self.colorInFront()==yellow:
+      return true
+    for d in range(0,360,90):
+      saveH=self.t.getHeading()
+      saveX=self.t.getXPos()
+      saveY=self.t.getYPos()
+      self.t.setHeading(d)
+      if self.surroundings()[0]=='empty':
+        self.travel2BranchOrWall()
+        if self.solve():
+          return true
+        self.t.turnToFace(saveX,saveY)
+        self.t.travelForward(sqrt((saveX-m.t.getXPos())**2 + (saveY-m.t.getYPos())**2))
+        self.travelForward(self.t,saveX,saveY)
+        self.t.setHeading(saveH)
+        
+        
     
                 
                               
@@ -150,13 +177,16 @@ moveTo(m.t,25,187)
 m.t.setHeading(90)
 assert m.surroundings() == ['visited','wall','wall','empty'], m.surroundings()
 
-# test for currentColor
-assert m.currentColor()==green
+# test for the existence of currentColor
+moveTo(m.t,25,187)
+m.t.setHeading(90)
+m.image = makePicture('maze.jpg')
+assert m.currentColor() == white
 
 # test that we get ['empty','wall','visited','wall']
 # after moving forward 30 pixels
 m.travelForward(30)
-assert m.surroundings() == ['visited','wall','visited','wall'],m.surroundings()
+assert m.surroundings() == ['empty','wall','visited','wall'],m.surroundings()
 
 # test that we stop at the branch going north
 moveTo(m.t,25,187)
@@ -165,6 +195,55 @@ m.t.setHeading(0)
 m.travel2BranchOrWall()
 assert m.t.getYPos()==105, 'did not stop at the branch.'
 
+# test existence of solve
+success = m.solve()
+
+# test that we can solve it from the easy location just above the cheese
+penUp(m.t)
+moveTo(m.t,377,143)
+turnToFace(m.t,377,183)
+penDown(m.t)
+assert m.solve() == true, 'did not solve above the cheese.'
+
+# test that we can solve if the turtle is above the cheese and has to travel.
+m.image = makePicture('maze.jpg')
+penUp(m.t)
+moveTo(m.t,377,93)
+m.t.setHeading(180)
+penDown(m.t)
+m.travelForward(10)
+printNow(m.surroundings())
+assert m.solve() == true, 'did not solve from above the cheese.'
+
+# test that we turn our green path to red when we travel over it
+m.image = makePicture('maze.jpg')
+penUp(m.t)
+moveTo(self.t,25,187)
+m.t.setHeading(90)
+penDown(self.t)
+moveForward(m.t,30)
+turnRight(m.t)
+turnRight(m.t)
+moveForward(m.t,30)
+turnRight(m.t)
+turnRight(m.t)
+assert m.colorInFront() == red, "Didn't change color of trail."
+
+# test starting from the isolated region, should always fail. 
+m.image=makePicture('maze.jpg')
+penUp(m.t)
+moveTo(m.t,141,219)
+m.t.setHeading(0)
+penDown(m.t)
+assert m.solve()==false
+
+
+# test that we can solve if the turtle is above the cheese and facing north.
+# penUp(m.t)
+# moveTo(m.t,377,93)
+# turnToFace(m.t,377,83)
+# penDown(m.t)
+# assert m.solve() == true, 'did not solve from above the cheese.'
 
 
 #if c != white:

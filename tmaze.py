@@ -13,30 +13,75 @@ class Maze(object):
     self.t.setHeading(90)
     penDown(self.t)
     
-    
-  def colorInFront(self):
-    """ returns the color 5 pixels in front of the turtle"""
-    heading = self.t.getHeading()
-    if heading == 90 or heading == -270: 
-      px = getPixelAt(self.image,self.t.getXPos()+20,self.t.getYPos()) 
-    if heading == 0:
-      px = getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()-20)
-    if heading == -90 or heading == 270: 
-      px = getPixelAt(self.image,self.t.getXPos()-20,self.t.getYPos()) 
-    if heading == 180 or heading == -180:
-      px = getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()+20)
+  def currentColor(self):
+    px = getPixelAt(self.image,self.t.getXPos(),self.t.getYPos())
     c = getColor(px)
     if distance(c,white) < 150:
       return white
     if distance(c,blue) < 150:
       return blue
+    if distance(c,green) < 150:
+      return green
+    if distance(c,yellow) < 150:
+      return blue
+      
+  def colorInFront(self):
+    """ returns the color 5 pixels in front of the turtle"""
+    heading = self.t.getHeading()
+    if heading == 90 or heading == -270: 
+      px = getPixelAt(self.image,self.t.getXPos()+15,self.t.getYPos()) 
+    if heading == 0:
+      px = getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()-15)
+    if heading == -90 or heading == 270: 
+      px = getPixelAt(self.image,self.t.getXPos()-15,self.t.getYPos()) 
+    if heading == 180 or heading == -180:
+      px = getPixelAt(self.image,self.t.getXPos(),self.t.getYPos()+15)
+    c = getColor(px)
+    if distance(c,white) < 150:
+      return white
+    if distance(c,blue) < 150:
+      return blue
+    if distance(c,green) < 150:
+      return green
+    if distance(c,yellow) < 150:
+      return blue
+    # Unknown color, assume wall. 
+    return blue
     
   def travel2BranchOrWall(self):
-    while self.colorInFront() != blue:
-      forward(self.t,1)
-    forward(self.t,8)
+    while self.surroundings()[1] == 'empty' or self.surroundings()[3] == 'empty':
+      self.travelForward(1)
+    while self.surroundings()[0] != 'wall':
+      self.travelForward(1)
+      if self.surroundings().count('empty') > 1:
+        self.travelForward(9)
+        return
+    self.travelForward(9)
         
+  def surroundings(self):
+    colorMap = { 'wall':blue,'empty':white,'visited':green,'end':yellow}
+    s=[]
+    for i in range(4):
+      c = self.colorInFront()
+      for key,col in colorMap.items(): 
+        if col == c:
+          s.append(key)
+      self.t.turnRight()
+    return s
+    
+  def travelForward(self,dist=10):
+    while dist > 0:
+      x=self.t.getXPos()
+      y=self.t.getYPos()
+      addOvalFilled(self.image,x-5,y-5,10,10,green)
+      dist=dist-1
+      forward(self.t,1)
+    
+      
+    
                 
+                              
+                                                          
 # tests
 
 # test the existence of the class
@@ -90,19 +135,36 @@ assert m.colorInFront() == blue, 'color is not blue facing south'
 # test for the existence of travel2BranchOrWall
 moveTo(m.t,25,187)
 m.t.setHeading(90)
+m.image = makePicture('maze.jpg')
 m.travel2BranchOrWall()
 
 # test that we are at the wall
 assert m.t.getXPos() == 100, 'X position not correct for travel2BranchOrWall'
 assert m.t.getYPos() == 187, 'Y position not correct for travel2BranchOrWall'
 
+# test for a method called surroundings
+s=m.surroundings()
 
+# test that it returns 4 items; empty, wall, wall, empty. 
+moveTo(m.t,25,187)
+m.t.setHeading(90)
+assert m.surroundings() == ['visited','wall','wall','empty'], m.surroundings()
 
-# test that we stop at a branch
-# moveTo(m.t,25,187) 
-# m.t.setHeading(0)
-# m.travel2BranchOrWall()
-# assert m.t.getYPos() == 105, "turtle didn't stop at branch."
+# test for currentColor
+assert m.currentColor()==green
+
+# test that we get ['empty','wall','visited','wall']
+# after moving forward 30 pixels
+m.travelForward(30)
+assert m.surroundings() == ['visited','wall','visited','wall'],m.surroundings()
+
+# test that we stop at the branch going north
+moveTo(m.t,25,187)
+m.image = makePicture('maze.jpg')
+m.t.setHeading(0)
+m.travel2BranchOrWall()
+assert m.t.getYPos()==105, 'did not stop at the branch.'
+
 
 
 #if c != white:

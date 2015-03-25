@@ -64,10 +64,12 @@ class Maze(object):
         
   def surroundings(self):
     """ returns a list of 4 states representing the turtle's environment """
-    colorMap = { 'wall':blue,'empty':white,'visited':green,'end':yellow, 'visited':red}
+    colorMap = { 'wall':blue,'empty':white,'visited':green,'end':yellow, 'revisited':red }
     s=[]
     for i in range(4):
       c = self.colorInFront()
+      # printNow(c)
+      assert c.__class__ == Color
       for key,col in colorMap.items(): 
         if col == c:
           s.append(key)
@@ -78,10 +80,10 @@ class Maze(object):
     while dist > 0:
       x=self.t.getXPos()
       y=self.t.getYPos()
-      if self.currentColor() == white:
-        addOvalFilled(self.image,x-10,y-10,20,20,green)
+      if self.colorInFront() == white:
+        addOvalFilled(self.image,x-8,y-8,16,16,green)
       else:
-        addOvalFilled(self.image,x-10,y-10,20,20,red)
+        addOvalFilled(self.image,x-8,y-8,16,16,red)
       dist=dist-1
       forward(self.t,1)
       repaint(m.image)
@@ -90,19 +92,21 @@ class Maze(object):
     """ solves the maze """
     if self.colorInFront()==yellow:
       return true
+    
     for d in range(0,360,90):
+      self.t.setHeading(d)
       saveH=self.t.getHeading()
       saveX=self.t.getXPos()
       saveY=self.t.getYPos()
-      self.t.setHeading(d)
       if self.surroundings()[0]=='empty':
         self.travel2BranchOrWall()
         if self.solve():
           return true
         self.t.turnToFace(saveX,saveY)
-        self.t.travelForward(sqrt((saveX-m.t.getXPos())**2 + (saveY-m.t.getYPos())**2))
-        self.travelForward(self.t,saveX,saveY)
+        self.travelForward(sqrt((saveX-m.t.getXPos())**2 + (saveY-m.t.getYPos())**2))
         self.t.setHeading(saveH)
+    return false
+    
         
         
     
@@ -196,7 +200,7 @@ m.travel2BranchOrWall()
 assert m.t.getYPos()==105, 'did not stop at the branch.'
 
 # test existence of solve
-success = m.solve()
+# success = m.solve()
 
 # test that we can solve it from the easy location just above the cheese
 penUp(m.t)
@@ -212,19 +216,19 @@ moveTo(m.t,377,93)
 m.t.setHeading(180)
 penDown(m.t)
 m.travelForward(10)
-printNow(m.surroundings())
+# printNow(m.surroundings())
 assert m.solve() == true, 'did not solve from above the cheese.'
 
 # test that we turn our green path to red when we travel over it
 m.image = makePicture('maze.jpg')
 penUp(m.t)
-moveTo(self.t,25,187)
+moveTo(m.t,25,187)
 m.t.setHeading(90)
-penDown(self.t)
-moveForward(m.t,30)
+penDown(m.t)
+m.travelForward(30)
 turnRight(m.t)
 turnRight(m.t)
-moveForward(m.t,30)
+m.travelForward(30)
 turnRight(m.t)
 turnRight(m.t)
 assert m.colorInFront() == red, "Didn't change color of trail."

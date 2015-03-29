@@ -53,13 +53,19 @@ class Maze(object):
     return blue
     
   def travel2BranchOrWall(self):
+    if self.surroundings()[1] == 'empty' or self.surroundings()[3] == 'empty':
+      printNow('Skipping forward.')
     while self.surroundings()[1] == 'empty' or self.surroundings()[3] == 'empty':
       self.travelForward(1)
+    if self.surroundings()[0] != 'wall' and self.surroundings()[0] != 'end':
+      printNow('Moving Forward to wall or end')
     while self.surroundings()[0] != 'wall' and self.surroundings()[0] != 'end':
       self.travelForward(1)
       if self.surroundings().count('empty') > 1:
+        printNow('Found Branch.')
         self.travelForward(9)
         return
+    printNow('Last Skip Forward.')
     self.travelForward(9)
         
   def surroundings(self):
@@ -244,11 +250,14 @@ penDown(m.t)
 assert m.solve()==false
 
 
-# test starting from the isolated region, should always fail. 
+# test starting from near the end. 
 m.image=makePicture('maze.jpg')
+printNow('starting last test')
 penUp(m.t)
 moveTo(m.t,337,123)
 m.t.setHeading(0)
+m.travel2BranchOrWall()
+m.travel2BranchOrWall()
 m.travel2BranchOrWall()
 # m.travel2BranchOrWall()
 

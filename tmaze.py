@@ -1,6 +1,6 @@
 
 # maze program by Michael Toth
-setMediaPath('/Users/michaeltoth/Documents/turtlemaze')
+setMediaPath('/Users/mst/Downloads/maze106')
 class Maze(object):
   """ Creates and solves a maze using turtles in JES. """
   def __init__(self):
@@ -115,6 +115,7 @@ class Maze(object):
                                                           
 # tests
 
+
 # test the existence of the class
 m = Maze()
 
@@ -148,7 +149,8 @@ assert m.colorInFront() == blue, 'color is not blue near the wall.'
 # test that we get blue when we are facing north near a wall
 backward(m.t,30)
 turn(m.t,-90)
-assert m.colorInFront() == blue, 'color is not blue facing north'
+assert m.colorInFront() == blue, 'color is not blue facing north\n\tPosition is ' + \
+  str((m.t.getXPos(),m.t.getYPos())) + ', color in front is ' + str(m.colorInFront())
 
 # test that we get blue when facing south
 turn(m.t,180)
@@ -220,7 +222,7 @@ m.travelForward(10)
 assert m.solve() == true, 'did not solve from above the cheese.'
 
 # test that we turn our green path to red when we travel over it
-m.image = makePicture('maze.jpg')
+# m.image = makePicture('maze.jpg')
 penUp(m.t)
 moveTo(m.t,25,187)
 m.t.setHeading(90)
@@ -234,7 +236,7 @@ turnRight(m.t)
 assert m.colorInFront() == red, "Didn't change color of trail."
 
 # test starting from the isolated region, should always fail. 
-m.image=makePicture('maze.jpg')
+# m.image=makePicture('maze.jpg')
 penUp(m.t)
 moveTo(m.t,141,219)
 m.t.setHeading(0)
@@ -242,13 +244,21 @@ penDown(m.t)
 assert m.solve()==false
 
 
-# test that we can solve if the turtle is above the cheese and facing north.
+# test starting from the isolated region, should always fail. 
+m.image=makePicture('maze.jpg')
+penUp(m.t)
+moveTo(m.t,337,123)
+m.t.setHeading(0)
+m.travel2BranchOrWall()
+# m.travel2BranchOrWall()
+
+
+# test that we can solve from the starting location facing east
 # penUp(m.t)
-# moveTo(m.t,377,93)
-# turnToFace(m.t,377,83)
+# moveTo(m.t,25,187)
+# m.t.setHeading(90)
 # penDown(m.t)
 # assert m.solve() == true, 'did not solve from above the cheese.'
-
 
 #if c != white:
 #  raise "Bad Color from colorInFront" 

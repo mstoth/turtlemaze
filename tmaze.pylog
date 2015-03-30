@@ -1044,4 +1044,42 @@
 <menu_button time="Sun Mar 29 06:21:07 EDT 2015">Load Program</menu_button>
 <menu_button time="Sun Mar 29 06:21:23 EDT 2015">Save Program</menu_button>
 <file_saved time="Sun Mar 29 06:21:23 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+<file_opened time="Sun Mar 29 20:20:27 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_opened>
+<menu_button time="Sun Mar 29 20:20:28 EDT 2015">Load Program</menu_button>
+<menu_button time="Sun Mar 29 20:24:21 EDT 2015">Load Program</menu_button>
+<file_saved time="Sun Mar 29 20:24:23 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<menu_button time="Sun Mar 29 20:25:40 EDT 2015">Load Program</menu_button>
+<file_saved time="Sun Mar 29 20:25:42 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<command_run time="Sun Mar 29 20:26:04 EDT 2015">m=Maze()></command_run>
+<command_run time="Sun Mar 29 20:26:11 EDT 2015">m.solve()></command_run>
+<command_run time="Sun Mar 29 20:29:54 EDT 2015">m=Maze()></command_run>
+<command_run time="Sun Mar 29 20:30:04 EDT 2015">m.travel2BranchOrWall()></command_run>
+<menu_button time="Sun Mar 29 20:32:44 EDT 2015">Load Program</menu_button>
+<file_saved time="Sun Mar 29 20:32:45 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<command_run time="Sun Mar 29 20:36:58 EDT 2015">m=Maze()></command_run>
+<command_run time="Sun Mar 29 20:37:07 EDT 2015">m.solve()></command_run>
+<command_run time="Sun Mar 29 20:38:34 EDT 2015">m=Maze()></command_run>
+<command_run time="Sun Mar 29 20:38:38 EDT 2015">m.solve()></command_run>
+<menu_button time="Sun Mar 29 20:40:02 EDT 2015">Save Program</menu_button>
+<file_saved time="Sun Mar 29 20:40:02 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+</file_created>
+<menu_button time="Sun Mar 29 20:40:04 EDT 2015">Load Program</menu_button>
+<command_run time="Sun Mar 29 20:40:45 EDT 2015">m=Maze()></command_run>
+<command_run time="Sun Mar 29 20:40:50 EDT 2015">m.solve()></command_run>
+<menu_button time="Sun Mar 29 20:42:19 EDT 2015">Save Program</menu_button>
+<file_saved time="Sun Mar 29 20:42:19 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+<file_opened time="Mon Mar 30 03:06:27 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_opened>
+<menu_button time="Mon Mar 30 03:06:35 EDT 2015">Load Program</menu_button>
+<command_run time="Mon Mar 30 03:07:06 EDT 2015">m=Maze()></command_run>
+<command_run time="Mon Mar 30 03:07:17 EDT 2015">penUp(m.t)></command_run>
+<command_run time="Mon Mar 30 03:07:36 EDT 2015">moveTo(m.t,25,187)></command_run>
+<menu_button time="Mon Mar 30 03:09:02 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 03:09:02 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
+<file_opened time="Mon Mar 30 03:14:39 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_opened>
+<menu_button time="Mon Mar 30 03:14:51 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 03:15:26 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 03:15:26 EDT 2015">C:\Users\mst\Downloads\maze106\tmaze.py</file_saved>
 </file_created>

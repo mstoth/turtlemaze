@@ -54,19 +54,17 @@ class Maze(object):
     
   def travel2BranchOrWall(self):
     if self.surroundings()[1] == 'empty' or self.surroundings()[3] == 'empty':
-      printNow('Skipping forward.')
+      # printNow('Skipping forward.')
     while self.surroundings()[1] == 'empty' or self.surroundings()[3] == 'empty':
       self.travelForward(1)
     if self.surroundings()[0] != 'wall' and self.surroundings()[0] != 'end':
-      printNow('Moving Forward to wall or end')
+      # printNow('Moving Forward to wall or end')
     while self.surroundings()[0] != 'wall' and self.surroundings()[0] != 'end':
       self.travelForward(1)
       if self.surroundings().count('empty') > 1:
-        printNow('Found Branch.')
+        # printNow('Found Branch.')
         self.travelForward(9)
         return
-    printNow('Last Skip Forward.')
-    self.travelForward(9)
         
   def surroundings(self):
     """ returns a list of 4 states representing the turtle's environment """
@@ -87,12 +85,13 @@ class Maze(object):
       x=self.t.getXPos()
       y=self.t.getYPos()
       if self.colorInFront() == white:
-        addOvalFilled(self.image,x-8,y-8,16,16,green)
+        addOvalFilled(self.image,x-10,y-12,24,24,green)
       else:
-        addOvalFilled(self.image,x-8,y-8,16,16,red)
+        addOvalFilled(self.image,x-10,y-12,24,24,red)
       dist=dist-1
       forward(self.t,1)
-      repaint(m.image)
+      # DON'T DO THIS
+      # repaint(m.image)
     
   def solve(self):
     """ solves the maze """
@@ -121,158 +120,159 @@ class Maze(object):
                                                           
 # tests
 
+if (1):
+  # test the existence of the class
+  m = Maze()
 
-# test the existence of the class
-m = Maze()
+  # test we have the image
+  show(m.image)
 
-# test we have the image
-show(m.image)
+  # test we have a world in the maze
+  world = m.w
 
-# test we have a world in the maze
-world = m.w
+  # test that the world has the image as a background
+  p=m.w.getPicture()
+  assert p.getFileName() != 'None', 'No File Name for world picture.'
 
-# test that the world has the image as a background
-p=m.w.getPicture()
-assert p.getFileName() != 'None', 'No File Name for world picture.'
+  # test that we have a turtle
+  m.t
 
-# test that we have a turtle
-m.t
+  # test that it is in the right place
+  assert m.t.getXPos() == 25, 'Turtle x position not correct.'
+  assert m.t.getYPos() == 187, 'Turtle y position not correct.'
 
-# test that it is in the right place
-assert m.t.getXPos() == 25, 'Turtle x position not correct.'
-assert m.t.getYPos() == 187, 'Turtle y position not correct.'
+  # tests for the existence of colorInFront
+  c=m.colorInFront()
 
-# tests for the existence of colorInFront
-c=m.colorInFront()
+  # test that we get white from colorInFront
+  assert c == white,'color is not white.'
 
-# test that we get white from colorInFront
-assert c == white,'color is not white.'
+  # test we are near a wall and we get blue
+  forward(m.t,75)
+  assert m.colorInFront() == blue, 'color is not blue near the wall.'
 
-# test we are near a wall and we get blue
-forward(m.t,75)
-assert m.colorInFront() == blue, 'color is not blue near the wall.'
+  # test that we get blue when we are facing north near a wall
+  backward(m.t,30)
+  turn(m.t,-90)
+  assert m.colorInFront() == blue, 'color is not blue facing north\n\tPosition is ' + \
+    str((m.t.getXPos(),m.t.getYPos())) + ', color in front is ' + str(m.colorInFront())
 
-# test that we get blue when we are facing north near a wall
-backward(m.t,30)
-turn(m.t,-90)
-assert m.colorInFront() == blue, 'color is not blue facing north\n\tPosition is ' + \
-  str((m.t.getXPos(),m.t.getYPos())) + ', color in front is ' + str(m.colorInFront())
+  # test that we get blue when facing south
+  turn(m.t,180)
+  assert m.colorInFront() == blue, 'color is not blue facing south'
 
-# test that we get blue when facing south
-turn(m.t,180)
-assert m.colorInFront() == blue, 'color is not blue facing south'
+  # test that we get blue for facing west
+  moveTo(m.t,25,187)
+  m.t.setHeading(-90)
+  assert m.colorInFront() == blue, 'color is not blue facing west'
 
-# test that we get blue for facing west
-moveTo(m.t,25,187)
-m.t.setHeading(-90)
-assert m.colorInFront() == blue, 'color is not blue facing west'
+  # test that we get blue for facing south
+  m.t.setHeading(180)
+  assert m.colorInFront() == blue, 'color is not blue facing south'
 
-# test that we get blue for facing south
-m.t.setHeading(180)
-assert m.colorInFront() == blue, 'color is not blue facing south'
+  # test for the existence of travel2BranchOrWall
+  moveTo(m.t,25,187)
+  m.t.setHeading(90)
+  m.image = makePicture('maze.jpg')
+  m.travel2BranchOrWall()
 
-# test for the existence of travel2BranchOrWall
-moveTo(m.t,25,187)
-m.t.setHeading(90)
-m.image = makePicture('maze.jpg')
-m.travel2BranchOrWall()
+  # test that we are at the wall
+  assert m.t.getXPos() == 100, 'X position not correct for travel2BranchOrWall'
+  assert m.t.getYPos() == 187, 'Y position not correct for travel2BranchOrWall'
 
-# test that we are at the wall
-assert m.t.getXPos() == 100, 'X position not correct for travel2BranchOrWall'
-assert m.t.getYPos() == 187, 'Y position not correct for travel2BranchOrWall'
+  # test for a method called surroundings
+  s=m.surroundings()
 
-# test for a method called surroundings
-s=m.surroundings()
+  # test that it returns 4 items; empty, wall, wall, empty. 
+  moveTo(m.t,25,187)
+  m.t.setHeading(90)
+  assert m.surroundings() == ['visited','wall','wall','empty'], m.surroundings()
 
-# test that it returns 4 items; empty, wall, wall, empty. 
-moveTo(m.t,25,187)
-m.t.setHeading(90)
-assert m.surroundings() == ['visited','wall','wall','empty'], m.surroundings()
+  # test for the existence of currentColor
+  moveTo(m.t,25,187)
+  m.t.setHeading(90)
+  m.image = makePicture('maze.jpg')
+  assert m.currentColor() == white
 
-# test for the existence of currentColor
-moveTo(m.t,25,187)
-m.t.setHeading(90)
-m.image = makePicture('maze.jpg')
-assert m.currentColor() == white
+  # test that we get ['empty','wall','visited','wall']
+  # after moving forward 30 pixels
+  m.travelForward(30)
+  assert m.surroundings() == ['empty','wall','visited','wall'],m.surroundings()
 
-# test that we get ['empty','wall','visited','wall']
-# after moving forward 30 pixels
-m.travelForward(30)
-assert m.surroundings() == ['empty','wall','visited','wall'],m.surroundings()
+  # test that we stop at the branch going north
+  moveTo(m.t,25,187)
+  m.image = makePicture('maze.jpg')
+  m.t.setHeading(0)
+  m.travel2BranchOrWall()
+  assert m.t.getYPos()==105, 'did not stop at the branch.'
 
-# test that we stop at the branch going north
-moveTo(m.t,25,187)
-m.image = makePicture('maze.jpg')
-m.t.setHeading(0)
-m.travel2BranchOrWall()
-assert m.t.getYPos()==105, 'did not stop at the branch.'
+  # test existence of solve
+  # success = m.solve()
 
-# test existence of solve
-# success = m.solve()
+  # test that we can solve it from the easy location just above the cheese
+  penUp(m.t)
+  moveTo(m.t,377,143)
+  turnToFace(m.t,377,183)
+  penDown(m.t)
+  assert m.solve() == true, 'did not solve above the cheese.'
 
-# test that we can solve it from the easy location just above the cheese
-penUp(m.t)
-moveTo(m.t,377,143)
-turnToFace(m.t,377,183)
-penDown(m.t)
-assert m.solve() == true, 'did not solve above the cheese.'
+  # test that we can solve if the turtle is above the cheese and has to travel.
+  m.image = makePicture('maze.jpg')
+  penUp(m.t)
+  moveTo(m.t,377,93)
+  m.t.setHeading(180)
+  penDown(m.t)
+  m.travelForward(10)
+  # printNow(m.surroundings())
+  assert m.solve() == true, 'did not solve from above the cheese.'
 
-# test that we can solve if the turtle is above the cheese and has to travel.
-m.image = makePicture('maze.jpg')
-penUp(m.t)
-moveTo(m.t,377,93)
-m.t.setHeading(180)
-penDown(m.t)
-m.travelForward(10)
-# printNow(m.surroundings())
-assert m.solve() == true, 'did not solve from above the cheese.'
+  # test that we turn our green path to red when we travel over it
+  # m.image = makePicture('maze.jpg')
+  penUp(m.t)
+  moveTo(m.t,25,187)
+  m.t.setHeading(90)
+  penDown(m.t)
+  m.travelForward(30)
+  turnRight(m.t)
+  turnRight(m.t)
+  m.travelForward(30)
+  turnRight(m.t)
+  turnRight(m.t)
+  assert m.colorInFront() == red, "Didn't change color of trail."
 
-# test that we turn our green path to red when we travel over it
-# m.image = makePicture('maze.jpg')
-penUp(m.t)
-moveTo(m.t,25,187)
-m.t.setHeading(90)
-penDown(m.t)
-m.travelForward(30)
-turnRight(m.t)
-turnRight(m.t)
-m.travelForward(30)
-turnRight(m.t)
-turnRight(m.t)
-assert m.colorInFront() == red, "Didn't change color of trail."
-
-# test starting from the isolated region, should always fail. 
-# m.image=makePicture('maze.jpg')
-penUp(m.t)
-moveTo(m.t,141,219)
-m.t.setHeading(0)
-penDown(m.t)
-assert m.solve()==false
-
-
-# test starting from near the end. 
-m.image=makePicture('maze.jpg')
-printNow('starting last test')
-penUp(m.t)
-moveTo(m.t,337,123)
-m.t.setHeading(0)
-m.travel2BranchOrWall()
-m.travel2BranchOrWall()
-m.travel2BranchOrWall()
-# m.travel2BranchOrWall()
+  # test starting from the isolated region, should always fail. 
+  # m.image=makePicture('maze.jpg')
+  penUp(m.t)
+  moveTo(m.t,141,219)
+  m.t.setHeading(0)
+  penDown(m.t)
+  assert m.solve()==false
 
 
-# test that we can solve from the starting location facing east
-# penUp(m.t)
-# moveTo(m.t,25,187)
-# m.t.setHeading(90)
-# penDown(m.t)
-# assert m.solve() == true, 'did not solve from above the cheese.'
+  # test starting from near the end. 
+  m.image=makePicture('maze.jpg')
+  printNow('starting last test')
+  penUp(m.t)
+  moveTo(m.t,337,123)
+  m.t.setHeading(0)
+  m.travel2BranchOrWall()
+  m.travel2BranchOrWall()
+  m.travel2BranchOrWall()
+  # m.travel2BranchOrWall()
 
-#if c != white:
-#  raise "Bad Color from colorInFront" 
-#forward(m.t,70)
-#c=m.colorInFront()
-#if c != blue:
-#  raise "Bad Color from colorInFront" 
-#moveTo(m.t,26,182)    
+
+  # test that we can solve from the starting location facing east
+  m=Maze()
+  penUp(m.t)
+  moveTo(m.t,25,187)
+  m.t.setHeading(90)
+  penDown(m.t)
+  assert m.solve() == true, 'did not solve from above the cheese.'
+
+  #if c != white:
+  #  raise "Bad Color from colorInFront" 
+  #forward(m.t,70)
+  #c=m.colorInFront()
+  #if c != blue:
+  #  raise "Bad Color from colorInFront" 
+  #moveTo(m.t,26,182)    

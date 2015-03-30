@@ -10,10 +10,21 @@ class Maze(object):
     self.t = makeTurtle(self.w)
     penUp(self.t)
     moveTo(self.t,25,184)
+    m.t.setHeading(90)
     penDown(self.t)
 
+  def reset(self):
+    """ resets the turtle and image. """
+    self.image = makePicture('maze.jpg')
+    self.w.setPicture(self.image)
+    self.t.clearPath()
+    penUp(self.t)
+    moveTo(self.t,25,184)
+    self.t.setHeading(90)
+    penDown(self.t)
+    
   def colorInFront(self):
-    """ Returns the color 9 pixels in front of the turtle. """
+    """ Returns the color 11 pixels in front of the turtle. """
     dx = 11
     xpos = self.t.getXPos()
     ypos = self.t.getYPos()
@@ -33,7 +44,17 @@ class Maze(object):
     if distance(c,blue) < 150: 
       return blue
       
-    
+  def travel2BranchOrWall(self):
+    """ Moves the mouse to the next occurrance of a branch or a wall. """
+    if self.colorInFront() == white:
+      while self.colorInFront() == white:
+        forward(m.t,1)
+
+
+
+
+
+
 # Tests Follow This Line
 
 doTests = true
@@ -102,3 +123,51 @@ if doTests:
     printNow("Test 9 passed, colorInFront is blue when facing a wall.")
   else:
     printNow("Test 9 failed, colorInFront returned " + str(m.colorInFront()))
+    
+  # Test 10: Check for existence of travel2BranchOrWall
+  try:
+    if dir(m).index('travel2BranchOrWall') > 0:
+      printNow("Test 10 passed, travel2BranchOrWall exists.")
+    else:
+      printNow("Test 10 failed, travel2BranchOrWall does not exist")
+  except:
+    printNow("Test 10 failed, travel2BranchOrWall does not exist.")
+
+  # Test 11: Check for existence of reset
+  try:
+    if dir(m).index('reset') > 0:
+      printNow("Test 11 passed, reset exists.")
+    else:
+      printNow("Test 11 failed, reset does not exist")
+  except:
+    printNow("Test 11 failed, reset does not exist.")
+    
+  # Test 12: Check that reset puts the turtle at 25,184 facing north. 
+  m.reset()
+  assert m.t.getXPos() == 25, "Test 12 failed, x position is " + str(m.t.getXPos())
+  assert m.t.getYPos() == 184, "Test 12 failed, y position is " + str(m.t.getYPos())
+  assert m.t.getHeading() == 90, "Test 12 failed, heading is " + str(m.t.getHeading())
+  printNow("Test 12 passes, x,y, and heading are correct after reset.")
+  
+  # Test 13: Check that we travel to wall after travel2BranchOrWall
+  m.travel2BranchOrWall()
+  if m.t.getXPos() != 101:
+    printNow("Test 13 failed, x position is " + str(m.t.getXPos()))
+  elif m.t.getYPos() != 184: 
+    printNow("Test 13 failed, x position is " + str(m.t.getYPos()))
+  else:
+    printNow("Test 13 passed.")
+  
+  # Test 14: Check travel2BranchOrWall going north
+  m.reset()
+  turnLeft(m.t)
+  m.travel2BranchOrWall()
+  if m.t.getXPos() != 25: 
+    printNow("Test 14 failed, x position is " + str(m.t.getXPos()))
+  elif m.t.getYPos() != 105:
+    printNow("Test 14 failed, y position is " + str(m.t.getYPos()))
+  else:
+    printNow("Test 14 passed.")
+    
+    
+  

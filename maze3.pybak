@@ -1,5 +1,7 @@
 # Maze Program Written by Michael Toth
-setMediaPath('/Users/mst/Downloads/maze106')
+# setMediaPath('/Users/mst/Downloads/maze106')
+import time
+
 class Maze(object):
   """ Solves a maze with a turtle in JES """
   def __init__(self):
@@ -9,9 +11,11 @@ class Maze(object):
     self.w.setPicture(self.image)
     self.t = makeTurtle(self.w)
     penUp(self.t)
-    moveTo(self.t,25,184)
+    moveTo(self.t,30,190)
     self.t.setHeading(90)
     penDown(self.t)
+    self.endSound = makeSound('end.wav')
+    self.searchSound = makeSound('searching.wav')
 
   def reset(self):
     """ resets the turtle and image. """
@@ -19,7 +23,7 @@ class Maze(object):
     self.w.setPicture(self.image)
     self.t.clearPath()
     penUp(self.t)
-    moveTo(self.t,25,184)
+    moveTo(self.t,30,190)
     self.t.setHeading(90)
     penDown(self.t)
     
@@ -45,8 +49,11 @@ class Maze(object):
       return blue
     if distance(c,green) < 150: 
       return green
+    if distance(c,red) < 150: 
+      return red
     if distance(c,yellow) < 150: 
       return yellow
+    return blue # assume wall if uncertain
       
   def travel2BranchOrWall(self):
     """ Moves the mouse to the next occurrance of a branch or a wall. """
@@ -58,11 +65,16 @@ class Maze(object):
       while self.colorInFront() == white and self.surroundings().count(white) == 1:
         self.forward(1)
     if self.surroundings().count(white) > 1: 
+      play(self.searchSound)
+      time.sleep(0.75)
       self.forward(8)
       
   def forward(self,dist):
     while dist > 0:
-      addOvalFilled(self.image,self.t.getXPos()-10,self.t.getYPos()-10,20,20,green)
+      if self.colorInFront() == green:
+        addOvalFilled(self.image,self.t.getXPos()-10,self.t.getYPos()-10,20,20,red)
+      else:
+        addOvalFilled(self.image,self.t.getXPos()-10,self.t.getYPos()-10,20,20,green)
       dist = dist - 1
       forward(self.t,1)
       
@@ -75,9 +87,25 @@ class Maze(object):
 
   def solve(self):
     if self.colorInFront() == yellow:
+      play(self.endSound)
       return true
-
-
+    for i in range(4):
+      if self.colorInFront()==white:
+        saveX = m.t.getXPos()
+        saveY = m.t.getYPos()
+        saveH = m.t.getHeading()
+        self.travel2BranchOrWall()
+        if self.solve():
+          return true
+        else:
+          penUp(self.t)
+          turnToFace(self.t,saveX,saveY)
+          d=sqrt((self.t.getXPos()-saveX)**2+(self.t.getYPos()-saveY)**2)
+          penDown(self.t)
+          self.forward(d)
+          self.t.setHeading(saveH)
+      self.t.turnRight()
+    return false
 
 # Tests Follow This Line
 
@@ -123,7 +151,7 @@ if doTests:
     printNow("Test 5 failed, unable to access turtle.")
     
   # Test 6: Check for turtle in proper starting location
-  if m.t.getXPos() == 25 and m.t.getYPos() == 184: 
+  if m.t.getXPos() == 30 and m.t.getYPos() == 190: 
     printNow("Test 6 passed, turtle is in the correct position.")
   else:
     printNow("Test 6 failed, turtle is not in the correct starting position.")
@@ -142,6 +170,7 @@ if doTests:
     
   
   # Test 9: Check that colorInFront returns blue when facing a wall
+  turnLeft(m.t)
   turnLeft(m.t)
   if m.colorInFront() == blue:
     printNow("Test 9 passed, colorInFront is blue when facing a wall.")
@@ -168,17 +197,18 @@ if doTests:
     
   # Test 12: Check that reset puts the turtle at 25,184 facing north. 
   m.reset()
-  assert m.t.getXPos() == 25, "Test 12 failed, x position is " + str(m.t.getXPos())
-  assert m.t.getYPos() == 184, "Test 12 failed, y position is " + str(m.t.getYPos())
+  assert m.t.getXPos() == 30, "Test 12 failed, x position is " + str(m.t.getXPos())
+  assert m.t.getYPos() == 190, "Test 12 failed, y position is " + str(m.t.getYPos())
   assert m.t.getHeading() == 90, "Test 12 failed, heading is " + str(m.t.getHeading())
-  printNow("Test 12 passes, x,y, and heading are correct after reset.")
+  printNow("Test 12 passed, x,y, and heading are correct after reset.")
   
   # Test 13: Check that we travel to wall after travel2BranchOrWall
+  m.reset()
   m.travel2BranchOrWall()
-  if m.t.getXPos() != 101:
+  if m.t.getXPos() != 109:
     printNow("Test 13 failed, x position is " + str(m.t.getXPos()))
-  elif m.t.getYPos() != 184: 
-    printNow("Test 13 failed, x position is " + str(m.t.getYPos()))
+  elif m.t.getYPos() != 190: 
+    printNow("Test 13 failed, y position is " + str(m.t.getYPos()))
   else:
     printNow("Test 13 passed.")
   
@@ -186,9 +216,9 @@ if doTests:
   m.reset()
   turnLeft(m.t)
   m.travel2BranchOrWall()
-  if m.t.getXPos() != 25: 
+  if m.t.getXPos() != 30: 
     printNow("Test 14 failed, x position is " + str(m.t.getXPos()))
-  elif m.t.getYPos() != 106:
+  elif m.t.getYPos() != 110:
     printNow("Test 14 failed, y position is " + str(m.t.getYPos()))
   else:
     printNow("Test 14 passed.")
@@ -213,14 +243,33 @@ if doTests:
   # Test 17: Check for solve when turtle is at the cheese
   m.reset()
   penUp(m.t)
-  moveTo(m.t,378,150)
+  moveTo(m.t,390,155)
   m.t.setHeading(180)
   if m.solve():
-    printNow("Test 17 passes")
+    printNow("Test 17 passed")
   else:
-    printNow("Test 17 fails")
+    printNow("Test 17 failed")
     
-  
+  # Test 18: Check for solve returning false from 150,230
+  m.reset()
+  penUp(m.t)
+  moveTo(m.t,150,230)
+  m.t.setHeading(0)
+  if m.solve(): 
+    printNow("Test 18 failed, returned true")
+  else:
+    printNow("Test 18 passed.")
+    
+  # Test 19: Check for a red trail
+  m.reset()
+  m.forward(50)
+  m.t.setHeading(-90)
+  m.forward(50)
+  m.t.setHeading(90)
+  if m.colorInFront() == red:
+    printNow("Test 19 passed")
+  else:
+    printNow("Test 19 failed, expected red but got " + str(m.colorInFront())) 
   # Test xx: Check that surroundings returns ['empty','wall','wall','empty'] after reset
   # m.reset()
   # if m.surroundings() != ['empty','wall','wall','empty']:

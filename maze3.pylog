@@ -342,4 +342,92 @@
 <command_run time="Mon Mar 30 15:42:39 EDT 2015">distance(blue,makeColor(122,163,209))></command_run>
 <menu_button time="Mon Mar 30 15:46:46 EDT 2015">Save Program</menu_button>
 <file_saved time="Mon Mar 30 15:46:46 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+<file_opened time="Mon Mar 30 22:05:13 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_opened>
+<menu_button time="Mon Mar 30 22:05:17 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 22:05:39 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 22:05:39 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 22:05:40 EDT 2015">Load Program</menu_button>
+<command_run time="Mon Mar 30 22:06:01 EDT 2015">getMediaPath()></command_run>
+<command_run time="Mon Mar 30 22:06:32 EDT 2015">setMediaPath('/Users/mst/Downloads/maze106')></command_run>
+<menu_button time="Mon Mar 30 22:07:00 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 22:07:00 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 22:07:16 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 22:07:16 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 22:07:35 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 22:07:57 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 22:07:57 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 22:08:03 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 23:10:26 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:10:26 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:26:58 EDT 2015">Load Program</menu_button>
+<file_saved time="Mon Mar 30 23:27:00 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:30:11 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:30:11 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:30:13 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 23:35:51 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:35:51 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:35:52 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 23:38:03 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:38:03 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:38:10 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 23:46:17 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:46:17 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:46:19 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:46:19 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:46:56 EDT 2015">Load Program</menu_button>
+<menu_button time="Mon Mar 30 23:48:13 EDT 2015">Save Program</menu_button>
+<file_saved time="Mon Mar 30 23:48:13 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Mon Mar 30 23:48:15 EDT 2015">Load Program</menu_button>
+<menu_button time="Tue Mar 31 00:15:38 EDT 2015">Load Program</menu_button>
+<menu_button time="Tue Mar 31 00:19:49 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:19:49 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:19:50 EDT 2015">Load Program</menu_button>
+<menu_button time="Tue Mar 31 00:22:42 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:22:42 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:22:52 EDT 2015">Load Program</menu_button>
+<menu_button time="Tue Mar 31 00:29:33 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:29:33 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:29:35 EDT 2015">Load Program</menu_button>
+<command_run time="Tue Mar 31 00:30:18 EDT 2015">m.reset()></command_run>
+<command_run time="Tue Mar 31 00:30:23 EDT 2015">turnLeft(m.t)></command_run>
+<command_run time="Tue Mar 31 00:30:31 EDT 2015">m.travel2BranchOrWall()></command_run>
+<command_run time="Tue Mar 31 00:30:48 EDT 2015">m.surroundings()></command_run>
+<menu_button time="Tue Mar 31 00:34:32 EDT 2015">Load Program</menu_button>
+<command_run time="Tue Mar 31 00:34:59 EDT 2015">m.reset()></command_run>
+<command_run time="Tue Mar 31 00:35:04 EDT 2015">turnLeft(m.t)></command_run>
+<command_run time="Tue Mar 31 00:35:11 EDT 2015">m.travel2BranchOrWall()></command_run>
+<menu_button time="Tue Mar 31 00:35:23 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:35:23 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:35:26 EDT 2015">Load Program</menu_button>
+<command_run time="Tue Mar 31 00:38:55 EDT 2015">explore(m.image)></command_run>
+<menu_button time="Tue Mar 31 00:40:10 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:40:10 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:40:45 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:40:45 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:40:47 EDT 2015">Load Program</menu_button>
+<menu_button time="Tue Mar 31 00:40:53 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:40:53 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+</file_created>
+<menu_button time="Tue Mar 31 00:40:53 EDT 2015">Load Program</menu_button>
+<command_run time="Tue Mar 31 00:41:14 EDT 2015">m.colorInFront()></command_run>
+<menu_button time="Tue Mar 31 00:41:49 EDT 2015">Save Program</menu_button>
+<file_saved time="Tue Mar 31 00:41:49 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
 </file_created>

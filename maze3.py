@@ -1,5 +1,5 @@
 # Maze Program Written by Michael Toth
-setMediaPath('/Users/toth/Documents/GitHub/turtlemaze')
+setMediaPath('/Users/mst/Downloads/maze106')
 class Maze(object):
   """ Solves a maze with a turtle in JES """
   def __init__(self):
@@ -10,7 +10,7 @@ class Maze(object):
     self.t = makeTurtle(self.w)
     penUp(self.t)
     moveTo(self.t,25,184)
-    m.t.setHeading(90)
+    self.t.setHeading(90)
     penDown(self.t)
 
   def reset(self):
@@ -43,15 +43,39 @@ class Maze(object):
       return white
     if distance(c,blue) < 150: 
       return blue
+    if distance(c,green) < 150: 
+      return green
+    if distance(c,yellow) < 150: 
+      return yellow
       
   def travel2BranchOrWall(self):
     """ Moves the mouse to the next occurrance of a branch or a wall. """
+    if self.surroundings().count(white) > 1: 
+      while self.surroundings().count(white) > 1: 
+        self.forward(1)
+        
     if self.colorInFront() == white:
-      while self.colorInFront() == white:
-        forward(m.t,1)
+      while self.colorInFront() == white and self.surroundings().count(white) == 1:
+        self.forward(1)
+    if self.surroundings().count(white) > 1: 
+      self.forward(8)
+      
+  def forward(self,dist):
+    while dist > 0:
+      addOvalFilled(self.image,self.t.getXPos()-10,self.t.getYPos()-10,20,20,green)
+      dist = dist - 1
+      forward(self.t,1)
+      
+  def surroundings(self):
+    s=[]
+    for i in range(4):
+      s.append(self.colorInFront())
+      turn(self.t)
+    return s
 
-
-
+  def solve(self):
+    if self.colorInFront() == yellow:
+      return true
 
 
 
@@ -164,10 +188,43 @@ if doTests:
   m.travel2BranchOrWall()
   if m.t.getXPos() != 25: 
     printNow("Test 14 failed, x position is " + str(m.t.getXPos()))
-  elif m.t.getYPos() != 105:
+  elif m.t.getYPos() != 106:
     printNow("Test 14 failed, y position is " + str(m.t.getYPos()))
   else:
     printNow("Test 14 passed.")
+  
+  # Test 15: Check that we are leaving a green trail
+  m.reset()
+  m.forward(30)
+  m.t.setHeading(-90)
+  if m.colorInFront() != green:
+    printNow("Test 15 failed, color is not green but " + str(m.colorInFront()))
+  else:
+    printNow("Test 15 passed")
+  
+  # Test 16: Checks that surroundings passes back [white,blue,blue,white]
+  m.reset()
+  if m.surroundings() != [white,blue,blue,white]:
+    printNow("Test 16 failed, surroundings returned " + str(m.surroundings()))
+  else:
+    printNow("Test 16 passed.")
+  
+  
+  # Test 17: Check for solve when turtle is at the cheese
+  m.reset()
+  penUp(m.t)
+  moveTo(m.t,378,150)
+  m.t.setHeading(180)
+  if m.solve():
+    printNow("Test 17 passes")
+  else:
+    printNow("Test 17 fails")
     
-    
+  
+  # Test xx: Check that surroundings returns ['empty','wall','wall','empty'] after reset
+  # m.reset()
+  # if m.surroundings() != ['empty','wall','wall','empty']:
+  #   printNow("Test 15 failed, surroundings returned " + str(m.surroundings()))
+  # else:
+  #   printNow("Test 15 passed, surroundings are correct")
   

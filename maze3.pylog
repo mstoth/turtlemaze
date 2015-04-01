@@ -644,4 +644,49 @@
 <command_run time="Tue Mar 31 21:52:17 EDT 2015">m.solve()></command_run>
 <menu_button time="Tue Mar 31 21:52:40 EDT 2015">Save Program</menu_button>
 <file_saved time="Tue Mar 31 21:52:40 EDT 2015">C:\Users\mst\Downloads\maze106\maze3.py</file_saved>
+<file_opened time="Wed Apr 01 09:10:10 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_opened>
+<menu_button time="Wed Apr 01 09:10:40 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:10:40 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:12:50 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:12:50 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:12:53 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:12:53 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:12:58 EDT 2015">Load Program</menu_button>
+<menu_button time="Wed Apr 01 09:14:15 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:14:15 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:14:16 EDT 2015">Load Program</menu_button>
+<menu_button time="Wed Apr 01 09:15:40 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:15:40 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:15:50 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:15:50 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:15:51 EDT 2015">Load Program</menu_button>
+<command_run time="Wed Apr 01 09:15:59 EDT 2015">m=Maze()></command_run>
+<command_run time="Wed Apr 01 09:16:11 EDT 2015">explore(m.image)></command_run>
+<command_run time="Wed Apr 01 09:16:43 EDT 2015">solve(150,225,0)></command_run>
+<command_run time="Wed Apr 01 09:16:54 EDT 2015">m.solve(150,225,0)></command_run>
+<command_run time="Wed Apr 01 09:17:31 EDT 2015">m.reset()></command_run>
+<command_run time="Wed Apr 01 09:17:43 EDT 2015">m.solve(0,150,225,0)></command_run>
+<menu_button time="Wed Apr 01 09:19:49 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:19:49 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:20:05 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:20:05 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:20:09 EDT 2015">Load Program</menu_button>
+<command_run time="Wed Apr 01 09:20:17 EDT 2015">m=Maze()></command_run>
+<command_run time="Wed Apr 01 09:20:35 EDT 2015">m.solveFrom(150,225,0)></command_run>
+<menu_button time="Wed Apr 01 09:20:52 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:20:52 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
+</file_created>
+<menu_button time="Wed Apr 01 09:20:54 EDT 2015">Load Program</menu_button>
+<command_run time="Wed Apr 01 09:20:59 EDT 2015">m=Maze()></command_run>
+<command_run time="Wed Apr 01 09:21:04 EDT 2015">m.solveFrom(150,225,0)></command_run>
+<menu_button time="Wed Apr 01 09:21:29 EDT 2015">Save Program</menu_button>
+<file_saved time="Wed Apr 01 09:21:29 EDT 2015">C:\Users\toth\Documents\GitHub\turtlemaze\maze3.py</file_saved>
 </file_created>

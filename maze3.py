@@ -16,6 +16,7 @@ class Maze(object):
     penDown(self.t)
     self.endSound = makeSound('end.wav')
     self.searchSound = makeSound('searching.wav')
+    self.soundOn=false
 
   def reset(self):
     """ resets the turtle and image. """
@@ -65,7 +66,8 @@ class Maze(object):
       while self.colorInFront() == white and self.surroundings().count(white) == 1:
         self.forward(1)
     if self.surroundings().count(white) > 1: 
-      play(self.searchSound)
+      if self.soundOn:
+        play(self.searchSound)
       time.sleep(0.6)
       self.forward(8)
       
@@ -85,9 +87,23 @@ class Maze(object):
       turn(self.t)
     return s
 
-  def solve(self):
+  def turnOnSound(self):
+    self.soundOn=true
+    
+  def turnOffSound(self):
+    self.soundOn=false
+    
+  def solveFrom(self,xpos,ypos,hdg):
+    penUp(self.t)
+    moveTo(self.t,xpos,ypos)
+    self.t.setHeading(hdg)
+    penDown(self.t)
+    self.solve()
+   
+  def solve(self,xpos=30,ypos=190,hdg=90):
     if self.colorInFront() == yellow:
-      play(self.endSound)
+      if self.soundOn:
+        play(self.endSound)
       return true
     for i in range(4):
       if self.colorInFront()==white:
@@ -109,7 +125,7 @@ class Maze(object):
 
 # Tests Follow This Line
 
-doTests = true
+doTests = false
 if doTests:
   # First Test
   m=Maze()

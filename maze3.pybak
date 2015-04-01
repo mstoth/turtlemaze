@@ -1,5 +1,5 @@
 # Maze Program Written by Michael Toth
-# setMediaPath('/Users/mst/Downloads/maze106')
+setMediaPath('/Users/mst/Downloads/maze106')
 import time
 
 class Maze(object):
@@ -66,7 +66,7 @@ class Maze(object):
         self.forward(1)
     if self.surroundings().count(white) > 1: 
       play(self.searchSound)
-      time.sleep(0.75)
+      time.sleep(0.6)
       self.forward(8)
       
   def forward(self,dist):

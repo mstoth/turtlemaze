@@ -1,5 +1,5 @@
 # Maze Program Written by Michael Toth
-setMediaPath('/Users/mst/Downloads/maze106')
+setMediaPath('/Users/PC1/Documents/Github/turtlemaze')
 import time
 
 class Maze(object):
@@ -211,7 +211,7 @@ if doTests:
   except:
     printNow("Test 11 failed, reset does not exist.")
     
-  # Test 12: Check that reset puts the turtle at 25,184 facing north. 
+  # Test 12: Check that reset puts the turtle at 30,190 facing north. 
   m.reset()
   assert m.t.getXPos() == 30, "Test 12 failed, x position is " + str(m.t.getXPos())
   assert m.t.getYPos() == 190, "Test 12 failed, y position is " + str(m.t.getYPos())

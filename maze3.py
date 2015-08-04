@@ -125,7 +125,7 @@ class Maze(object):
 
 # Tests Follow This Line
 
-doTests = false
+doTests = true
 if doTests:
   # First Test
   m=Maze()

@@ -1,5 +1,5 @@
 # Maze Program Written by Michael Toth
-setMediaPath('/Users/PC1/Documents/Github/turtlemaze')
+setMediaPath('/Users/toth/Documents/Github/turtlemaze')
 import time
 
 class Maze(object):
@@ -18,6 +18,13 @@ class Maze(object):
     self.searchSound = makeSound('searching.wav')
     self.soundOn=false
 
+  def clear(self):
+    """ sets the maze to all walls """
+    for col in range(420,20):
+      for row in range(300,20):
+        addRectFilled(self.image,col,row,20,20,blue)
+    self.w.setPicture(self.image)
+    
   def reset(self):
     """ resets the turtle and image. """
     self.image = makePicture('maze.jpg')
@@ -292,4 +299,13 @@ if doTests:
   #   printNow("Test 15 failed, surroundings returned " + str(m.surroundings()))
   # else:
   #   printNow("Test 15 passed, surroundings are correct")
+  
+  # we want to draw a maze. 
+  # blank the screen
+  m.reset()
+  m.clear()
+  if m.colorInFront() == blue:
+    printNow("Test 20 passed")
+  else:
+    printNow("Test 20 failed, color should be blue in front after clear.")
   

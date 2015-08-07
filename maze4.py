@@ -1,6 +1,7 @@
 # Maze Program Written by Michael Toth
 setMediaPath('/Users/toth/Documents/Github/turtlemaze')
 import time
+import random
 
 class Maze(object):
   """ Solves a maze with a turtle in JES """
@@ -10,20 +11,24 @@ class Maze(object):
     self.w = makeWorld(getWidth(self.image),getHeight(self.image))
     self.w.setPicture(self.image)
     self.t = makeTurtle(self.w)
-    penUp(self.t)
-    moveTo(self.t,30,190)
-    self.t.setHeading(90)
-    penDown(self.t)
+    self.home()
     self.endSound = makeSound('end.wav')
     self.searchSound = makeSound('searching.wav')
     self.soundOn=false
 
+  def home(self):
+    penUp(self.t)
+    moveTo(self.t,30,190)
+    self.t.setHeading(90)
+    
   def clear(self):
     """ sets the maze to all walls """
-    for col in range(420,20):
-      for row in range(300,20):
+    for col in range(0,420,20):
+      for row in range(0,300,20):
         addRectFilled(self.image,col,row,20,20,blue)
-    self.w.setPicture(self.image)
+    addRectFilled(self.image,20,180,20,20,white)
+    self.w.hide()
+    self.w.show()
     
   def reset(self):
     """ resets the turtle and image. """
@@ -35,6 +40,198 @@ class Maze(object):
     self.t.setHeading(90)
     penDown(self.t)
     
+  def find_space(self):
+    ''' finds 9x9 all blue area '''
+    for col in range(30,getWidth(self.image),20):
+      printNow(col)
+      for row in range(30,getHeight(self.image),20):
+        empty=true
+        for dx in range(-20,40,20):
+          for dy in range(-20,40,20):
+            if col+dx>=0 and col+dx<420 and row+dy>=0 and row+dy<300:
+              p=getPixel(self.image,col+dx,row+dy)
+              if getColor(p)!=blue:
+                empty=false
+        if empty:
+          return (col,row)
+          
+  def dig(self,through=false):
+    """ 
+    digs in the current direction and returns true if successful 
+    if through is true, it will dig through to existing paths
+    """
+    if self.colorInFront() != blue:
+      #printNow("color in front is " + str(self.colorInFront()))
+      return false
+    x=getXPos(self.t)
+    y=getYPos(self.t)
+    x=x-10
+    y=y-10
+    h=self.t.getHeading()
+    #printNow(str(x)+","+str(y)+" "+str(h))
+    if h==0:
+      y=y-20; yy=y-20; xx=x
+      if xx<=0 or yy<=0:
+        return false
+      if not through:
+        if getColor(getPixelAt(self.image,xx-20,yy))!=blue:
+          return false
+        if getColor(getPixelAt(self.image,xx+20,yy))!=blue:
+          return false
+        if getColor(getPixelAt(self.image,xx-20,y))!=blue:
+          return false
+        if getColor(getPixelAt(self.image,xx+20,y))!=blue:
+          return false
+    if h==90 or h==-270:
+      x=x+20; xx=x+20; yy=y
+      if not through:
+        try:
+          if getColor(getPixelAt(self.image,xx,yy-20))!=blue:
+            #printNow(str(x)+","+str(y))
+            #printNow(getColor(getPixelAt(self.image,xx,yy-20)))
+            return false
+          if getColor(getPixelAt(self.image,xx,yy+20))!=blue:
+            #printNow(str(x)+","+str(y))
+            #printNow(getColor(getPixelAt(self.image,xx,yy+20)))
+            return false
+          if getColor(getPixelAt(self.image,x,yy-20))!=blue:
+            #printNow(str(x)+","+str(y))
+            #printNow(getColor(getPixelAt(self.image,x,yy-20)))
+            return false
+          if getColor(getPixelAt(self.image,x,yy+20))!=blue:
+            #printNow(str(x)+","+str(y))
+            #printNow(getColor(getPixelAt(self.image,xx,yy+20)))
+            return false
+        except:
+          print "."
+          # do nothing
+    if h==180 or h==-180:
+      y=y+20; yy=y+20; xx=x
+      if not through:
+        try:
+          if getColor(getPixelAt(self.image,xx-20,yy))!=blue:
+            return false
+          if getColor(getPixelAt(self.image,xx+20,yy))!=blue:
+            return false
+          if getColor(getPixelAt(self.image,xx-20,y))!=blue:
+            return false
+          if getColor(getPixelAt(self.image,xx+20,y))!=blue:
+            return false
+        except:
+          print "."
+          # return false
+    if h==-90 or h==270:
+      x=x-20; xx=x-20; yy=y
+      if not through:
+        try:
+          if getColor(getPixelAt(self.image,x,yy-20))!=blue:
+            #printNow(getColor(getPixelAt(self.image,x,yy-20)))
+            return false
+          if getColor(getPixelAt(self.image,x,yy+20))!=blue:
+            #printNow(getColor(getPixelAt(self.image,x,yy+20)))
+            return false
+          if getColor(getPixelAt(self.image,xx,yy-20))!=blue:
+            #printNow(getColor(getPixelAt(self.image,xx,yy-20)))
+            return false
+          if getColor(getPixelAt(self.image,xx,yy+20))!=blue:
+            #printNow(getColor(getPixelAt(self.image,xx,yy+20)))
+            return false
+        except:
+          print "."
+          # return false
+    if x<=0 or x>=420 or y<=0 or y>=280:
+      return false
+    if xx<=0 or xx>=420 or yy<=0 or yy>=280:
+      return false
+    if getColor(getPixelAt(self.image,xx,yy))==white:
+      return false
+    addRectFilled(self.image,x,y,20,20,white)
+    self.w.hide()
+    self.w.show()
+    return true
+  
+  def makePathFrom(self,t):
+    ''' t is a tuple specifying a starting location surrounded by walls. '''
+    self.t.moveTo(t[0],t[1])
+    addRectFilled(self.image,t[0]-10,t[1]-10,20,20,white)
+    ntimes=0
+    while self.colorInFront()!=white and ntimes<1000:
+      ntimes=ntimes+1
+      dx=random.randint(-3,5)
+      dy=random.randint(-3,5)
+      if dx<0: # direction is west
+        self.t.setHeading(-90)
+      else:
+        self.t.setHeading(90)
+      while dx!=0 and self.colorInFront()!=white:
+        if dx<0:
+          dx=dx+1
+        elif dx>0:
+          dx=dx-1
+        self.dig(through=true)
+        self.move()
+      if dy<0: # direction is north
+        self.t.setHeading(0)
+      else:
+        self.t.setHeading(180)
+      while dy!=0 and self.colorInFront()!=white:
+        if dy<0:
+          dy=dy+1
+        elif dy>0:
+          dy=dy-1
+        self.dig(through=true)
+        self.move()
+    if ntimes>=1000:
+      return false
+    else:
+      return true
+
+            
+  def makePath(self,mark_end=True):
+    ''' makes a path to the right hand wall '''
+    ntimes=0
+    while self.t.getXPos() < 380 and ntimes<1000:
+      ntimes=ntimes+1
+      dx=random.randint(-3,5)
+      dy=random.randint(-3,5)
+      if dx<0: # direction is west
+        self.t.setHeading(-90)
+      else:
+        self.t.setHeading(90)
+      while dx!=0:
+        if dx<0:
+          dx=dx+1
+        elif dx>0:
+          dx=dx-1
+        self.dig()
+        self.move()
+      if dy<0: # direction is north
+        self.t.setHeading(0)
+      else:
+        self.t.setHeading(180)
+      while dy!=0:
+        if dy<0:
+          dy=dy+1
+        elif dy>0:
+          dy=dy-1
+        self.dig()
+        self.move()
+    if ntimes>=1000:
+      return false
+    else:
+      x=self.t.getXPos()+10
+      y=self.t.getYPos()-10
+      if mark_end:
+        addRectFilled(self.image,x,y,20,20,yellow)
+      return true
+        
+  def move(self):
+    ''' moves without painting '''
+    if self.colorInFront()!=white:
+      return false
+    self.t.forward(20)
+    return true
+      
   def colorInFront(self):
     """ Returns the color 11 pixels in front of the turtle. """
     dx = 11
@@ -50,7 +247,10 @@ class Maze(object):
       ypos = ypos + dx
     if h == -90 or h == 270:
       xpos = xpos - dx
-    c = getColor(getPixelAt(self.image,xpos,ypos))
+    try:
+      c = getColor(getPixelAt(self.image,xpos,ypos))
+    except:
+      return blue
     if distance(c,white) < 150: 
       return white
     if distance(c,blue) < 150: 
@@ -76,7 +276,7 @@ class Maze(object):
       if self.soundOn:
         play(self.searchSound)
       time.sleep(0.6)
-      self.forward(8)
+      self.forward(9)
       
   def forward(self,dist):
     while dist > 0:
@@ -113,6 +313,8 @@ class Maze(object):
         play(self.endSound)
       return true
     for i in range(4):
+      if self.colorInFront()==yellow:
+        return true
       if self.colorInFront()==white:
         saveX = m.t.getXPos()
         saveY = m.t.getYPos()
@@ -130,9 +332,93 @@ class Maze(object):
       self.t.turnRight()
     return false
 
+  def create(self):  
+    m.t.penUp()
+    m.clear()
+    m.makePath()
+    m.t.moveTo(30,190)
+    m.t.setHeading(90)
+
+    
+    
+    
+    
 # Tests Follow This Line
 
-doTests = true
+if true:
+  m=Maze()
+  m.clear()
+  assert(m.find_space()!=None)
+  printNow("find_space is ok")
+  printNow(str(m.find_space()))
+  
+  m.create()
+  s=m.find_space()
+  while s!=None:
+    m.makePathFrom(s)
+    s=m.find_space()
+  m.home()
+  m.solve()
+
+if false:
+  # we should be able to dig to second-to-last column
+  m=Maze()
+  m.clear()
+  addRectFilled(m.image,360,180,20,20,white)
+  m.t.moveTo(370,190)
+  m.t.setHeading(90)
+  assert(m.dig())
+   # we want to draw a maze. 
+  # blank the screen
+  m=Maze()
+  m.reset()
+  m.clear()
+  if m.colorInFront() == blue:
+    printNow("Test 20 passed")
+  else:
+    printNow("Test 20 failed, color should be blue in front after clear.")
+  
+  # our current position should be white. 
+  if getColor(getPixelAt(m.image,getXPos(m.t),getYPos(m.t))) != white:
+    printNow("Test 21 failed, not white at home location")
+  else:
+    printNow("Test 21 passed.")
+  
+  # we should not be able to move
+  assert(m.move()==false)
+  
+  # we should be able to dig
+  assert(m.dig())
+  
+  # we should be able to move
+  assert(m.move())
+  
+ 
+  # insure a wall separates previous trails from current dig
+  m=Maze()
+  m.clear()
+  addRectFilled(m.image,60,180,20,20,white)
+  m.w.hide(); m.w.show()
+  assert(m.dig()==false)
+  m.clear()
+  addRectFilled(m.image,60,200,20,20,white)
+  m.w.hide(); m.w.show()
+  assert(m.dig()==false)
+  m.clear()
+  addRectFilled(m.image,60,160,20,20,white)
+  m.w.hide(); m.w.show()
+  assert(m.dig()==false)
+  
+  # make a path to the right hand side
+  m=Maze()
+  m.clear()
+  m.t.penUp()
+  assert(m.makePath()==true)
+  m.t.moveTo(30,190)
+  m.t.setHeading(90)
+  m.solve()
+  
+doTests = false
 if doTests:
   # First Test
   m=Maze()
@@ -299,13 +585,4 @@ if doTests:
   #   printNow("Test 15 failed, surroundings returned " + str(m.surroundings()))
   # else:
   #   printNow("Test 15 passed, surroundings are correct")
-  
-  # we want to draw a maze. 
-  # blank the screen
-  m.reset()
-  m.clear()
-  if m.colorInFront() == blue:
-    printNow("Test 20 passed")
-  else:
-    printNow("Test 20 failed, color should be blue in front after clear.")
   

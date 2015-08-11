@@ -25,8 +25,8 @@ states={0:'EMPTY',1:'WALL',2:'VISITED',3:'END',4:'REVISITED'}
 class Maze:
   ''' Class to create and solve a maze. '''
   def __init__(self):
-    self.width=100
-    self.height=100
+    self.width=80
+    self.height=80
     self.matrix=[[WALL for i in range(100)] for j in range(100)]
     self.matrix[1][1]=EMPTY
     self.path=Path()
@@ -60,7 +60,7 @@ class Maze:
       xx=self.path.x-1; yy=self.path.y
     else:
       assert(False,"ERROR IN DIG, DIRECTION IS " + str(d))
-    if xx<1 or xx>98 or yy<1 or yy>98:
+    if xx<1 or xx>self.width-2 or yy<1 or yy>self.height-2:
       return (self.path.x,self.path.y) # CAN'T MOVE TO BORDER
     if self.state(xx,yy)==WALL:
       return (self.path.x,self.path.y) # CAN'T MOVE INTO WALL
@@ -89,11 +89,19 @@ class Maze:
       xxx=xx-1; yyy=yy
     else:
       assert False,"ERROR IN DIG, DIRECTION IS " + str(d)
-    if xx<1 or xx>98 or yy<1 or yy>98:
+    if xx<1 or xx>self.width-2 or yy<1 or yy>self.height-2:
       return False
     if xxx<1 or xxx>98 or yyy<1 or yyy>98:
       return False
     if self.state(xxx,yyy)!=WALL:
+      return False
+    if self.state(xxx,yyy-1)!=WALL:
+      return False
+    if self.state(xxx,yyy+1)!=WALL:
+      return False
+    if self.state(xxx-1,yyy)!=WALL:
+      return False
+    if self.state(xxx+1,yyy)!=WALL:
       return False
     if self.state(xx,yy)!=WALL:
       return False
@@ -116,8 +124,8 @@ class Maze:
     
     self.matrix[x][y]=s
   def clear(self):
-    for x in range(100):
-      for y in range(100):
+    for x in range(self.width):
+      for y in range(self.height):
         self.set_block(x,y,WALL)
     self.set_block(1,1,EMPTY)
     self.path.x=1
@@ -128,7 +136,7 @@ class Maze:
   
   def draw_random_path(self,mark_end=False):
     ntimes=0
-    while self.path.x<97 and self.path.y<97 and ntimes < 100:
+    while self.path.x<self.width-3 and self.path.y<self.height-3 and ntimes < 100:
       ntimes=ntimes+1
       printNow(self.path.x); printNow(self.path.y)
       dx=random.randint(-4,10)
@@ -152,12 +160,12 @@ class Maze:
           self.move(SOUTH,mark=False)
           dy=dy-1
       if mark_end:
-        if self.path.x==97:
-          self.set_block(98,self.path.y,EMPTY)
-          self.set_block(99,self.path.y,END)
-        if self.path.y==97:
-          self.set_block(self.path.x,98,EMPTY)
-          self.set_block(self.path.x,99,END)
+        if self.path.x==self.width-3:
+          self.set_block(self.width-2,self.path.y,EMPTY)
+          self.set_block(self.width-1,self.path.y,END)
+        if self.path.y==self.height-3:
+          self.set_block(self.path.x,self.height-2,EMPTY)
+          self.set_block(self.path.x,self.height-1,END)
     return True  
   
   
@@ -181,8 +189,8 @@ if True:  # change to False when no tests wanted.
     global m
     m=Maze()
   setUp()
-  assert(m.width==100)
-  assert(m.height==100)
+  assert(m.width==80)
+  assert(m.height==80)
 
   # TEST STATES
   assert(m.state(1,1)==EMPTY)
@@ -211,5 +219,5 @@ if True:  # change to False when no tests wanted.
   m.clear()
   m.draw_random_path(mark_end=True)
   m.draw()
-  assert(m.path.x==97 or m.path.y==97)
+  assert(m.path.x==m.width-3 or m.path.y==m.height-3)
 

@@ -44,19 +44,39 @@ class Maze:
     # get our new coordinate for convenience (x,y)
     if direction==UP or direction==DOWN:
       x=self.location[0]
+      xx=x
       if direction==UP:
         y=self.location[1]-1 # up
+        yy=y-1
       else:
         y=self.location[1]+1 # down
+        yy=y+1
+      try:
+        if self.matrix[xx+1][yy]==EMPTY or self.matrix[xx-1][yy]==EMPTY:
+          return False
+      except:
+        return False
     if direction==LEFT or direction==RIGHT:
       y=self.location[1]
+      yy=y
       if direction==LEFT:
         x=self.location[0]-1 # left
+        xx=x-1
       else:
         x=self.location[0]+1 # right
+        xx=x+1
+      try:
+        if self.matrix[xx][yy-1]==EMPTY or self.matrix[xx][yy+1]==EMPTY:
+          return False
+      except:
+        return False
+        
     if x==0 or y==0 or x==(self.width/CELL_SIZE)-1 or y==(self.height/CELL_SIZE)-1:
       return False
-      
+    if self.matrix[x][y]==EMPTY:
+      return False
+    if self.matrix[xx][yy]==EMPTY:
+      return False
     addRectFilled(self.image,CELL_SIZE*x,\
       CELL_SIZE*y,CELL_SIZE,CELL_SIZE,white)
     self.matrix[x][y]=EMPTY
@@ -98,13 +118,67 @@ class Maze:
             self.location[1]*CELL_SIZE,CELL_SIZE,CELL_SIZE,yellow)
       self.matrix[self.location[0]][self.location[1]]=END
   
-  def make_fill(self,direction):
-    if direction==RIGHT:
-      dx=random.randint(5,10)
-      while dx>0 and self.dig(RIGHT):
-        dx=dx-1
-        self.move(RIGHT)
-  
+  def make_fill(self,depth):
+    if depth == 0:
+      return
+    savex=self.location[0]
+    savey=self.location[1]
+    # printNow(str(savex)+','+str(savey))
+    idir = random.randint(0,3) # initial direction
+    for i in range(4):
+      idir=(idir+1)%4
+      # printNow('in for loop ' + str(d))
+      self.location=(savex,savey)
+      if self.possible_to_dig(idir):
+        #  printNow('digging')
+        dxy=random.randint(5,10)
+        while dxy>0 and self.dig(idir):
+          dxy=dxy-1
+          self.move(idir)
+        self.make_fill(depth-1)
+    
+  def possible_to_dig(self,direction):
+    try:
+      if direction==RIGHT:
+        if self.matrix[self.location[0]+2][self.location[1]]==WALL and \
+           self.matrix[self.location[0]+2][self.location[1]-1]==WALL and \
+           self.matrix[self.location[0]+2][self.location[1]+1]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]-1]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]+1]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]]==WALL:
+           return True
+      if direction==DOWN:
+        if self.matrix[self.location[0]][self.location[1]+2]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]+2]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]+2]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]+1]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]+1]==WALL and \
+           self.matrix[self.location[0]][self.location[1]+1]==WALL:
+           return True
+      if direction==LEFT:
+        if self.location[0]-2<0:
+          return False
+        if self.matrix[self.location[0]-2][self.location[1]]==WALL and \
+           self.matrix[self.location[0]-2][self.location[1]-1]==WALL and \
+           self.matrix[self.location[0]-2][self.location[1]+1]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]-1]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]+1]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]]==WALL:
+           return True
+      if direction==UP:
+        if self.location[1]-2<0:
+          return False
+        if self.matrix[self.location[0]][self.location[1]-2]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]-2]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]-2]==WALL and \
+           self.matrix[self.location[0]-1][self.location[1]-1]==WALL and \
+           self.matrix[self.location[0]+1][self.location[1]-1]==WALL and \
+           self.matrix[self.location[0]][self.location[1]-1]==WALL:
+           return True
+      return False
+    except:
+      return False
+      
   def travel(self,direction):
     if direction==RIGHT:  
       while self.matrix[self.location[0]+1][self.location[1]]==EMPTY:
@@ -147,6 +221,8 @@ if true: # then we want tests.
   p=getPixel(m.image,2*CELL_SIZE,CELL_SIZE)
   assert getColor(p)==white, "Error: cell should be white after digging."
   assert m.matrix[m.location[0]+1][m.location[1]]==EMPTY,"Cell to the right should be empty." 
+  # try to dig again. Should be False
+  assert m.dig(RIGHT)==False,"Should not be able to re-dig."
   # try to dig down
   assert m.dig(DOWN), "Should be able to dig down."
   p=getPixel(m.image,CELL_SIZE,2*CELL_SIZE)
@@ -250,6 +326,45 @@ if true: # then we want tests.
     m.dig(UP)
     m.move(UP)
   m.location=(11,1)
-  m.make_fill(RIGHT)
+  m.make_fill(3)
   assert m.matrix[12][1]==EMPTY
-    
+  assert m.matrix[13][1]==WALL, "Location 13,1 not a wall." 
+
+  # make another environment for make_fill()
+  m.reset()
+  for i in range(10):
+    m.dig(RIGHT)
+    m.move(RIGHT)
+  for i in range(2):
+    m.dig(DOWN)
+    m.move(DOWN)
+  for i in range(4):
+    m.dig(RIGHT)
+    m.move(RIGHT)
+  for i in range(2):
+    m.dig(UP)
+    m.move(UP)
+  m.location=(11,1)
+  m.make_fill(3)
+  assert m.matrix[13][1]==EMPTY
+  assert m.matrix[14][1]==WALL, "Location 13,1 not a wall." 
+  
+  # make another environment for make_fill()
+  m.reset()
+  for i in range(10):
+    m.dig(RIGHT)
+    m.move(RIGHT)
+  for i in range(3):
+    m.dig(DOWN)
+    m.move(DOWN)
+  for i in range(4):
+    m.dig(RIGHT)
+    m.move(RIGHT)
+  for i in range(3):
+    m.dig(UP)
+    m.move(UP)
+  m.location=(11,1)
+  m.make_fill(3)
+  assert m.matrix[13][2]==EMPTY
+  assert m.matrix[13][3]==WALL
+  

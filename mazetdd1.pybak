@@ -118,7 +118,25 @@ class Maze:
             self.location[1]*CELL_SIZE,CELL_SIZE,CELL_SIZE,yellow)
       self.matrix[self.location[0]][self.location[1]]=END
   
-  def make_fill(self,depth):
+  def make_fill(self):
+    # can we dig in any direction? 
+    # save our location to come back here
+    saved_spot=self.location
+    for direction in [UP,DOWN,LEFT,RIGHT]:
+      direction = (direction + random.randint(0,3))%4 # randomize 
+      if self.possible_to_dig(direction):
+        # we can dig, pick a random value and dig that far
+        random_value = random.randint(8,12)
+        while self.possible_to_dig(direction) and random_value > 0:
+          self.dig(direction)
+          self.move(direction)
+          random_value=random_value-1
+        # now call make_fill again to repeat until done
+        self.make_fill()
+      # go back to our starting spot and check the other directions. 
+      self.location=saved_spot
+  
+  def xmake_fill(self,depth):
     if depth == 0:
       return
     savex=self.location[0]
@@ -311,6 +329,14 @@ if true: # then we want tests.
   # test travelling left
   assert m.travel(LEFT)==(1,1), "We didn't get to the lowest point." 
   
+  # test for make_fill().  view the results. 
+  m.reset()
+  m.make_path(True)
+  for d in [UP,DOWN,LEFT,RIGHT]:
+    m.travel(d)
+    m.make_fill()
+  m.draw()
+    
   # make an environment for make_fill()
   m.reset()
   for i in range(10):
@@ -326,7 +352,7 @@ if true: # then we want tests.
     m.dig(UP)
     m.move(UP)
   m.location=(11,1)
-  m.make_fill(3)
+  m.make_fill()
   assert m.matrix[12][1]==EMPTY
   assert m.matrix[13][1]==WALL, "Location 13,1 not a wall." 
 
@@ -345,7 +371,7 @@ if true: # then we want tests.
     m.dig(UP)
     m.move(UP)
   m.location=(11,1)
-  m.make_fill(3)
+  m.make_fill()
   assert m.matrix[13][1]==EMPTY
   assert m.matrix[14][1]==WALL, "Location 13,1 not a wall." 
   
@@ -364,7 +390,7 @@ if true: # then we want tests.
     m.dig(UP)
     m.move(UP)
   m.location=(11,1)
-  m.make_fill(3)
+  m.make_fill()
   assert m.matrix[13][2]==EMPTY
   assert m.matrix[13][3]==WALL
   
